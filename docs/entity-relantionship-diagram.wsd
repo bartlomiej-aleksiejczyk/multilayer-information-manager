@@ -1,5 +1,22 @@
 @startuml ER diagram
-
-title Class Diagram
+title Entity Relationship Diagram
 skinparam linetype ortho
+entity "users"{
+  *id : SEQUENCE
+  --
+  e1_id : VARCHAR(25)
+  }
+entity "components"{
+  *id : SEQUENCE
+  --
+  }
+entity "component_references"{
+  *id : SEQUENCE
+  --
+  *aggregating_component_id : SEQUENCE <<FK>>
+  *referenced_component_id : SEQUENCE <<FK>>
+  }
+components ||..|{ component_references
+components }|..|| component_references
+users ||..o{ components
 @enduml
