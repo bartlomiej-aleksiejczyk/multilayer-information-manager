@@ -1,0 +1,5 @@
+@startuml ER diagram
+
+title Class Diagram
+skinparam linetype ortho
+@enduml

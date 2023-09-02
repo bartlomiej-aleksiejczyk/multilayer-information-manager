@@ -1,0 +1,111 @@
+@startuml testDiagram
+title Class Diagram
+skinparam linetype ortho
+
+class AlnmanUser {
+    - id: Long
+    - role: Enum
+    getId(): Long
+    getRole(): Enum
+    }
+
+class AlnmanComponent {
+    - id: Long
+    getId(): Long
+    }
+class ComponentProxy {
+    }
+
+abstract Notification{
+    - id: Long
+    - status: Enum
+    - dismissed: boolean
+    - description: String 
+    + getUser(): User
+    + getState(): Enum
+    + nextState(): Long
+    + deactivate(): Long
+    + isDismissed(): Boolean
+    + dismiss() Long
+    + shouldStart() Boolean
+    + shouldStop() Boolean
+    + getDescription(): String
+}
+class EmailtNotification{
+    - emailDate: Instant
+    - sender: String
+    - title: String
+    - text: String
+    + getEmailDate(): Instant
+    + getSender(): String
+    + getTItle(): String
+    + getText(): String
+    + toString(): String
+}
+class DateTimeNotification{
+    - startDateTime: DateTime
+    - endDateTime: DateTime
+    + getStartDateTIme(): LocalDateTime
+    + getEndtDateTIme(): LocalDateTime
+}
+class PeriodicNotification{
+    - periodLenght: int
+    - lastStartDate: Instant
+    + getPeriodLength(): Int
+    + getLastStartDate(): Instant
+}
+
+abstract Note{
+    - title: String
+    - description: String
+    - priority: Int
+    + getTitle(): String
+    + getDescription(): Strig
+    + hasMediaHeader(): Boolean
+    + getMediaHeader(): Media
+}
+interface Checkable{
+    + getCompletionPercent(): Int
+    + getPoints(): Map<Int, Pair<Boolean, String>>
+    + togglePointCompleted(Int): void
+}
+class TextNote{
+}
+class ImageNote{
+    - textBody(): String
+    - imageMedia(): Image
+}
+class AudioNote{
+    - textBody(): String
+    - audioMedia(): Audio
+}
+class TemplateNote{
+    - jsonTemplate(): String
+    + getTemplate(): String
+    + useTemplate(): Int
+}
+class CalenderNote{
+    - StartLocalDateTime: LocalDateTime
+    - EndLocalDateTime: LocalDateTime
+}
+class ChecklistNote{
+    - BulletPoints: Map<Int, Pair<Boolean, String>>
+    - TextBody: String
+}
+AlnmanComponent "1" o-- "1" AlnmanUser
+AlnmanComponent "1" *-- "*" ComponentProxy
+ComponentProxy "1" o-- "*" AlnmanComponent
+AlnmanComponent "1" *-- "1" Notification
+AlnmanComponent "1" *-- "1" Note
+Notification <|-- EmailtNotification
+Notification <|-- DateTimeNotification
+Notification <|-- PeriodicNotification
+Note <|-- TextNote
+Note <|-- ImageNote
+Note <|-- AudioNote
+Note <|-- TemplateNote
+Note <|-- CalenderNote
+Note <|-- ChecklistNote
+Checkable <|.. ChecklistNote
+@enduml
+* Removed unnecessary getters and setters
